@@ -6,14 +6,14 @@
 /*   By: ghambrec <ghambrec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 10:42:21 by ghambrec          #+#    #+#             */
-/*   Updated: 2025/12/07 11:02:26 by ghambrec         ###   ########.fr       */
+/*   Updated: 2025/12/07 11:20:22 by ghambrec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Fixed.hpp"
 
 Fixed::Fixed(void)
-	:	fixed_point_(0)
+	:	raw_(0)
 {
 	std::cout << "Default constructor called\n";
 }
@@ -21,11 +21,15 @@ Fixed::Fixed(void)
 Fixed::Fixed(const Fixed& other)
 {
 	std::cout << "Copy constructor called\n";
+	raw_ = other.getRawBits();
 }
 
 Fixed& Fixed::operator=(const Fixed &other)
 {
 	std::cout << "Copy assignment constructor called\n";
+	if (this != &other)
+		raw_ = other.getRawBits();
+	return (*this);
 }
 
 Fixed::~Fixed()
@@ -33,12 +37,14 @@ Fixed::~Fixed()
 	std::cout << "Deconstructor called\n";
 }
 
-int Fixed::getRawBits(void)
+int Fixed::getRawBits(void) const
 {
-	return (fixed_point_);
+	std::cout << "getRawBits member function called\n";
+	return (raw_);
 }
 
 void Fixed::setRawBits(int const raw)
 {
-	
+	std::cout << "setRawBits member function called\n";
+	raw_ = raw;
 }

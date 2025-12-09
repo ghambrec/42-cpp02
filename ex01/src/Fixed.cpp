@@ -6,7 +6,7 @@
 /*   By: ghambrec <ghambrec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 10:42:21 by ghambrec          #+#    #+#             */
-/*   Updated: 2025/12/07 11:24:41 by ghambrec         ###   ########.fr       */
+/*   Updated: 2025/12/09 13:00:22 by ghambrec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,21 @@ Fixed::Fixed(void)
 	:	raw_(0)
 {
 	std::cout << "Default constructor called\n";
+}
+
+Fixed::Fixed(const int nbr)
+{
+	std::cout << "Int constructor called\n";
+	raw_ = nbr * (1 << fractional_bits_);
+}
+
+Fixed::Fixed(const float nbr)
+{
+	std::cout << "Float constructor called\n";
+	int	raw;
+	
+	raw = roundf(nbr * (1 << fractional_bits_));
+	raw_ = raw;
 }
 
 Fixed::Fixed(const Fixed& other)
@@ -34,17 +49,37 @@ Fixed& Fixed::operator=(const Fixed &other)
 
 Fixed::~Fixed()
 {
-	std::cout << "Deconstructor called\n";
+	std::cout << "Destructor called\n";
 }
 
 int Fixed::getRawBits(void) const
 {
-	std::cout << "getRawBits member function called\n";
 	return (raw_);
 }
 
 void Fixed::setRawBits(int const raw)
 {
-	std::cout << "setRawBits member function called\n";
 	raw_ = raw;
+}
+
+float Fixed::toFloat(void) const
+{
+	float val;
+
+	val = (float)getRawBits() / (1 << fractional_bits_);
+	return (val);
+}
+
+int Fixed::toInt(void) const
+{
+	int val;
+
+	val = getRawBits() / (1 << fractional_bits_);
+	return (val);
+}
+
+std::ostream& operator<<(std::ostream &os, const Fixed &obj)
+{
+	os << obj.toFloat();
+	return (os);
 }

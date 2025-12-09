@@ -6,7 +6,7 @@
 /*   By: ghambrec <ghambrec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 10:42:21 by ghambrec          #+#    #+#             */
-/*   Updated: 2025/12/09 13:00:22 by ghambrec         ###   ########.fr       */
+/*   Updated: 2025/12/09 13:46:27 by ghambrec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,15 @@ Fixed::Fixed(void)
 }
 
 Fixed::Fixed(const int nbr)
+	:	raw_(nbr * (1 << fractional_bits_))
 {
 	std::cout << "Int constructor called\n";
-	raw_ = nbr * (1 << fractional_bits_);
 }
 
 Fixed::Fixed(const float nbr)
+	:	raw_(static_cast<int>(roundf(nbr * (1 << fractional_bits_))))
 {
 	std::cout << "Float constructor called\n";
-	int	raw;
-	
-	raw = roundf(nbr * (1 << fractional_bits_));
-	raw_ = raw;
 }
 
 Fixed::Fixed(const Fixed& other)
